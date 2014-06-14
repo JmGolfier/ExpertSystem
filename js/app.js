@@ -3,14 +3,14 @@ var APP_NAME_CONTROLLERS = APP_NAME + ".controllers";
 var APP_NAME_SERVICES = APP_NAME + ".services";
 var APP_NAME_FILTERS = APP_NAME + ".filters";
 var APP_NAME_DIRECTIVES = APP_NAME + ".directives";
+var APP_LOCALSTORAGE_PREFIX = APP_NAME;
 
 // Declare app level module which depends on filters, and services
 angular.module(APP_NAME, [
     'ngRoute',
 //    'ngResource',
 //    'ui.bootstrap',
-//    'LocalStorageModule',
-//    'angular-util-services',
+    'LocalStorageModule',
     APP_NAME_FILTERS,
     APP_NAME_SERVICES,
     APP_NAME_DIRECTIVES,
@@ -25,11 +25,11 @@ angular.module(APP_NAME, [
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/battle', {templateUrl: 'views/battle.html', controller: 'BattleController'});
         $routeProvider.otherwise({redirectTo: '/battle'});
+    }]).
+
+    config(['localStorageServiceProvider', function(localStorageServiceProvider){
+        localStorageServiceProvider.setPrefix(APP_LOCALSTORAGE_PREFIX);
     }]);
-//
-//    config(['localStorageServiceProvider', function(localStorageServiceProvider){
-//        localStorageServiceProvider.setPrefix(APP_NAME);
-//    }]);
 
 //Modules declarations
 angular.module(APP_NAME_CONTROLLERS, []);
