@@ -43,8 +43,9 @@ describe("ExpertSystemService", function () {
 
             injectDependencies(function(expertSystemService){
                 var conclusions = expertSystemService.expertSystem.getConclusions();
-                expect(conclusions.length).toBeGreaterThan(0);
+                expect(conclusions.length).toBe(2);
             }, null, FakeExpertSystem);
+        });
     });
 });
 
