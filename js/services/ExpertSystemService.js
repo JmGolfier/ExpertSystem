@@ -1,4 +1,4 @@
-angular.module(APP_NAME_SERVICES).factory('ExpertSystemService', ['KnowledgeRepository', 'ExpertSystem'
+angular.module(APP_NAME_SERVICES).factory('ExpertSystemService', ['KnowledgeRepository', 'ExpertSystem',
     function (KnowledgeRepository, ExpertSystem) {
         var ExpertSystemService = function() {
             this.expertSystem = new ExpertSystem();
