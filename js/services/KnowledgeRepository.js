@@ -1,7 +1,6 @@
 angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageService",
     function(localStorageService) {
-        var KnowledgeRepository = function(prefix) {
-            this.prefix = prefix;
+        var KnowledgeRepository = function() {
         };
 
         KnowledgeRepository.prototype.getConclusions = function() {
