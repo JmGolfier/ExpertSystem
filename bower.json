@@ -17,6 +17,7 @@
     "angular": "~1.2.18",
     "bootstrap": "~3.1.1",
     "angular-mocks": "~1.2.18",
-    "angular-route": "~1.2.18"
+    "angular-route": "~1.2.18",
+    "angular-local-storage": "~0.0.5"
   }
 }
