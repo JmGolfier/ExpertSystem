@@ -23,6 +23,29 @@ describe("ExpertSystemService", function () {
             }, null, FakeExpertSystem);
         });
     });
+
+    describe("filed system expert", function(){
+        it("should exist", function(){
+            var FakeExpertSystem = function(){
+
+            };
+
+            FakeExpertSystem.prototype.getConclusions = function(){
+                return [{
+                    name : "dudu",
+                    facts : []
+                },
+                {
+                    name :  "manu",
+                    facts : []
+                }];
+            };
+
+            injectDependencies(function(expertSystemService){
+                var conclusions = expertSystemService.expertSystem.getConclusions();
+                expect(conclusions.length).toBeGreaterThan(0);
+            }, null, FakeExpertSystem);
+    });
 });
 
 function injectDependencies(callback, KnowledgeRepository, ExpertSystem) {
