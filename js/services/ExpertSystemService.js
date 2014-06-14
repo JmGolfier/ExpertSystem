@@ -2,7 +2,11 @@ angular.module(APP_NAME_SERVICES).factory('ExpertSystemService', ['KnowledgeRepo
     function (KnowledgeRepository, ExpertSystem) {
         var ExpertSystemService = function() {
             this.expertSystem = new ExpertSystem();
-            //checkRepo and fill expertSystem
+            this.knowledgeRepository = new KnowledgeRepository();
+            var conclusions = this.knowledgeRepository.getConclusions();
+            for(var i = 0; i<=conclusions.length-1;i++){
+                this.expertSystem.addRule(conclusions[i].name,conclusions[i].facts)
+            }
         };
 
         //perception, analyse, conclusion

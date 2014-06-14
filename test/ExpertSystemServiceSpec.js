@@ -26,25 +26,43 @@ describe("ExpertSystemService", function () {
 
     describe("filed system expert", function(){
         it("should exist", function(){
-            var FakeExpertSystem = function(){
-
-            };
-
-            FakeExpertSystem.prototype.getConclusions = function(){
-                return [{
-                    name : "dudu",
-                    facts : []
-                },
-                {
+            var repoConclusions = [{
+                name : "dudu",
+                facts : []
+            }, {
                     name :  "manu",
                     facts : []
                 }];
+
+            var FakeRepo = function(){
+
             };
 
+            FakeRepo.prototype.getConclusions = function(){
+                return repoConclusions;
+            };
+
+            var FakeExpertSystem = function(){
+                this.conclusions = [];
+            };
+
+            FakeExpertSystem.prototype.addRule = function(name, facts){
+                var conclusion = {
+                    name : name,
+                    facts : facts
+                };
+                this.conclusions.push(conclusion);
+            };
+
+            FakeExpertSystem.prototype.getConclusions = function(){
+                return this.conclusions;
+            };
+
+
             injectDependencies(function(expertSystemService){
-                var conclusions = expertSystemService.expertSystem.getConclusions();
-                expect(conclusions.length).toBe(2);
-            }, null, FakeExpertSystem);
+                var systemConclusions = expertSystemService.expertSystem.getConclusions();
+                expect(systemConclusions).toEqual(repoConclusions);
+            }, FakeRepo, FakeExpertSystem);
         });
     });
 });
