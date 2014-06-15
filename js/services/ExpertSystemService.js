@@ -9,9 +9,16 @@ angular.module(APP_NAME_SERVICES).factory('ExpertSystemService', ['KnowledgeRepo
             }
         };
 
-        //perception, analyse, conclusion
         ExpertSystemService.prototype.nextQuestion = function() {
-            //return conclusion or fact to ask
+            return this.expertSystem.inferBackward();
+        };
+
+        ExpertSystemService.prototype.analyze = function() {
+            return this.expertSystem.inferForward();
+        };
+
+        ExpertSystemService.prototype.setFactValid = function(fact, value) {
+            this.expertSystem.setFactValid(fact, value);
         };
 
         return ExpertSystemService;

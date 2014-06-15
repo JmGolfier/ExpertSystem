@@ -11,6 +11,7 @@ angular.module(APP_NAME, [
 //    'ngResource',
 //    'ui.bootstrap',
     'LocalStorageModule',
+    'multi-select',
     APP_NAME_FILTERS,
     APP_NAME_SERVICES,
     APP_NAME_DIRECTIVES,

@@ -2,7 +2,9 @@ angular.module(APP_NAME_CONTROLLERS).controller('BattleController', [ '$scope', 
     function($scope, ExpertSystemService) {
         var expertSystemService = new ExpertSystemService();
 
-        $scope.nextQuestion = function() {
-            //return fact or conclusion
+        $scope.currentQuestion = expertSystemService.nextQuestion();
+
+        $scope.setUserResponse = function(value) {
+
         };
     }]);

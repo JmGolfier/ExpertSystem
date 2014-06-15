@@ -24,8 +24,8 @@ describe("ExpertSystemService", function () {
         });
     });
 
-    describe("filed system expert", function(){
-        it("should exist", function(){
+    describe("fill system expert", function(){
+        it("should have an expert system with two conclusions", function(){
             var repoConclusions = [{
                 name : "dudu",
                 facts : []
@@ -63,6 +63,71 @@ describe("ExpertSystemService", function () {
                 var systemConclusions = expertSystemService.expertSystem.getConclusions();
                 expect(systemConclusions).toEqual(repoConclusions);
             }, FakeRepo, FakeExpertSystem);
+        });
+    });
+
+    describe("nextQuestion", function () {
+        it("should get the next question from expert system inferBackward", function () {
+            var fact = {
+                name: "someName",
+                label: "someLabel"
+            };
+
+            var FakeExpertSytstem = function() {
+
+            };
+
+            FakeExpertSytstem.prototype.inferBackward = function() {
+                return fact;
+            };
+
+            injectDependencies(function (service) {
+                var question = service.nextQuestion();
+                expect(question).toBeDefined();
+                expect(question.name).toBe(fact.name);
+                expect(question.label).toBe(fact.label);
+            }, null, FakeExpertSytstem);
+        });
+    });
+
+    describe("analyze", function () {
+        it("should not have any conclusion", function () {
+
+            var FakeExpertSystem = function() {
+
+            };
+
+             FakeExpertSystem.prototype.inferForward = function() {
+                 return [];
+             };
+
+            injectDependencies(function (service) {
+                var conclusions = service.analyze();
+                expect(conclusions).toBeDefined();
+                expect(conclusions.length).toBe(0);
+            }, null, FakeExpertSystem);
+        });
+    });
+
+    describe("setFactValid", function () {
+        it("should set the expert system fact true", function () {
+
+            var FakeExpertSystem = function () {
+
+            };
+
+            FakeExpertSystem.prototype.setFactValid = function(fact, value) {
+
+            };
+
+            FakeExpertSystem.prototype.getFact = function(factName){
+                return {name: factName, value: true};
+            };
+
+            injectDependencies(function (service) {
+                service.setFactValid("string", true);
+                expect(service.expertSystem.getFact("string").value).toBe(true);
+            }, null, FakeExpertSystem);
         });
     });
 });
