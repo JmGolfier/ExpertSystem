@@ -17,6 +17,20 @@ angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageS
             localStorageService.set("conclusions", existingConclusions);
         };
 
+        KnowledgeRepository.prototype.getFacts = function() {
+            var existingFacts = localStorageService.get("facts");
+            if(!existingFacts) {
+                existingFacts = [];
+            }
+            return existingFacts;
+        };
+
+        KnowledgeRepository.prototype.addFact = function(fact) {
+            var existingFacts = this.getFacts();
+            existingFacts.push(fact);
+            localStorageService.set("facts", existingFacts);
+        };
+
         KnowledgeRepository.prototype.clear = function() {
             localStorageService.clearAll();
         };

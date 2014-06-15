@@ -37,4 +37,17 @@ describe("KnowledgeRepository", function () {
             expect(firstConclusion.facts.length).toBe(conclusion.facts.length);
         });
     });
+
+    describe("getFacts", function () {
+        it("should return one fact", function () {
+            var fact = {
+                name: "THE FACT",
+                question: "woot?",
+                type: "initial"
+            };
+            repository.addFact(fact);
+            var facts = repository.getFacts();
+            expect(facts.length).toBe(1);
+        });
+    });
 });

@@ -19,6 +19,7 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-local-storage/angular-local-storage.js',
+      'bower_components/isteven-angular-multiselect/angular-multi-select.js',
       'lib/**',
       'js/**/*.js',
       'test/**/*Spec.js'
