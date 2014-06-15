@@ -1,13 +1,14 @@
 <h1>ATTRAPPEZ LES TOUUUUUUUUUUUUUS</h1>
 
 <div ng-show="currentQuestion">
-    <h2>Question</h2>
-    {{currentFact.label}}
+    <h2>Question {{nbQuestions}} :</h2>
+    {{currentQuestion.question}}
 
     <button ng-click="setUserResponse(true)">Oui</button>
     <button ng-click="setUserResponse(false)">Non</button>
 </div>
 
 <div ng-show="conclusion">
-    {{conclusion.label}}
+    {{conclusion.label}}<br>
+    Conclusion trouvée en {{nbQuestions}} questions.
 </div>
