@@ -4,11 +4,23 @@
     <h2>Question {{nbQuestions}} :</h2>
     {{currentQuestion.question}}
 
-    <button ng-click="setUserResponse(true)">Oui</button>
-    <button ng-click="setUserResponse(false)">Non</button>
+    <div ng-show="currentQuestion.length">
+        <select ng-model="selectedOptions"
+                ng-options="question.name for question in currentQuestion"></select>
+        <button ng-click="setUserResponseOption()">Valider</button>
+    </div>
+
+    <div ng-hide="currentQuestion.length">
+        <button ng-click="setUserResponse(true)">Oui</button>
+        <button ng-click="setUserResponse(false)">Non</button>
+    </div>
 </div>
 
 <div ng-show="conclusion">
     {{conclusion.label}}<br>
     Conclusion trouvée en {{nbQuestions}} questions.
+</div>
+
+<div ng-show="!currentQuestion && !conclusion">
+    :(
 </div>

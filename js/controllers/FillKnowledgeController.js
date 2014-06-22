@@ -9,7 +9,8 @@ angular.module(APP_NAME_CONTROLLERS).controller('FillKnowledgeController', [ '$s
             var fact = {
                 name : $scope.newFactName,
                 question : $scope.newFactQuestion,
-                type : $scope.newFactType
+                type : $scope.newFactType,
+                group : $scope.newFactGroup
             };
 
             if(fact.type == "intermediate"){
@@ -44,10 +45,27 @@ angular.module(APP_NAME_CONTROLLERS).controller('FillKnowledgeController', [ '$s
             $scope.newConclusionLabel = conclusion.label;
         };
 
+        $scope.deleteConclusion = function(conclusion) {
+            knoledgeRepository.deleteConclusion(conclusion);
+            $scope.conclusions = knoledgeRepository.getConclusions();
+        };
+
         $scope.editFact = function(fact) {
             $scope.newFactName = fact.name;
             $scope.newFactQuestion = fact.question;
             $scope.newFactType = fact.type;
+            $scope.newFactGroup = fact.group;
+        };
+
+        $scope.deleteFact = function(fact) {
+            knoledgeRepository.deleteFact(fact);
+            initFacts();
+        };
+
+        $scope.importDatabase = function() {
+            knoledgeRepository.importDatabase($scope.jsonDatabase);
+            initFacts();
+            $scope.conclusions = knoledgeRepository.getConclusions();
         };
 
         function initFacts() {

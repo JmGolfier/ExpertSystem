@@ -23,7 +23,6 @@ describe("ExpertSystemService", function () {
             }, null, FakeExpertSystem);
         });
     });
-
     describe("fill system expert", function(){
         it("should have an expert system with two conclusions", function(){
             var repoConclusions = [{
@@ -41,6 +40,9 @@ describe("ExpertSystemService", function () {
             FakeRepo.prototype.getConclusions = function(){
                 return repoConclusions;
             };
+            FakeRepo.prototype.getFacts = function(){
+                return [];
+            };
 
             var FakeExpertSystem = function(){
                 this.conclusions = [];
@@ -57,7 +59,6 @@ describe("ExpertSystemService", function () {
             FakeExpertSystem.prototype.getConclusions = function(){
                 return this.conclusions;
             };
-
 
             injectDependencies(function(expertSystemService){
                 var systemConclusions = expertSystemService.expertSystem.getConclusions();
@@ -78,7 +79,26 @@ describe("ExpertSystemService", function () {
             };
 
             FakeExpertSytstem.prototype.inferBackward = function() {
+                return {
+                    name: "someName",
+                    type: "initial",
+                    value: undefined
+                };
+            };
+
+            var FakeRepo = function(){
+
+            };
+
+            FakeRepo.prototype.getFact = function(name){
                 return fact;
+            };
+
+            FakeRepo.prototype.getConclusions = function() {
+                return [];
+            };
+            FakeRepo.prototype.getFacts = function(){
+                return [];
             };
 
             injectDependencies(function (service) {
@@ -86,7 +106,54 @@ describe("ExpertSystemService", function () {
                 expect(question).toBeDefined();
                 expect(question.name).toBe(fact.name);
                 expect(question.label).toBe(fact.label);
-            }, null, FakeExpertSytstem);
+            }, FakeRepo, FakeExpertSytstem);
+        });
+
+        it("should get multiple questions from group", function(){
+            var fact1 = {
+                name: "1",
+                group: "a"
+            };
+            var fact2 = {
+                name: "2",
+                group: "b"
+            };
+            var fact3 = {
+                name: "3",
+                group:"a"
+            };
+
+            var FakeRepo = function() {
+
+            };
+
+            FakeRepo.prototype.getFactsFromGroup = function() {
+                return [fact1, fact3];
+            };
+
+            FakeRepo.prototype.getConclusions = function() {
+                return [];
+            };
+            FakeRepo.prototype.getFacts = function(){
+                return [];
+            };
+            FakeRepo.prototype.getFact = function(){
+                return fact1;
+            };
+
+            var FakeExpertSystem = function() {
+
+            };
+
+            FakeExpertSystem.prototype.inferBackward = function() {
+                return fact1;
+            };
+
+            injectDependencies(function (service) {
+                var questions = service.nextQuestion();
+                expect(questions).toBeDefined();
+                expect(questions.length).toBe(2);
+            }, FakeRepo, FakeExpertSystem);
         });
     });
 
@@ -103,9 +170,47 @@ describe("ExpertSystemService", function () {
 
             injectDependencies(function (service) {
                 var conclusions = service.analyze();
-                expect(conclusions).toBeDefined();
-                expect(conclusions.length).toBe(0);
+                expect(conclusions).toBeUndefined();
             }, null, FakeExpertSystem);
+        });
+
+        it("should get the right conclusion infos", function () {
+            var conclusion = {
+                name : "a",
+                label : "conclusion !"
+            };
+
+            var FakeRepo = function(){
+
+            };
+
+            FakeRepo.prototype.getConclusions = function() {
+                return [];
+            };
+
+            FakeRepo.prototype.getConclusion = function(name){
+                return conclusion;
+            };
+            FakeRepo.prototype.getFacts = function(){
+                return [];
+            };
+
+            var FakeExpertSystem = function() {
+
+            };
+
+            FakeExpertSystem.prototype.inferForward = function() {
+                return [{
+                    name: "a"
+                }];
+            };
+
+            injectDependencies(function (service) {
+                var conclusion = service.analyze();
+                expect(conclusion).toBeDefined();
+                expect(conclusion.label).toBe("conclusion !");
+                expect(conclusion.name).toBe("a");
+            }, FakeRepo, FakeExpertSystem);
         });
     });
 
@@ -121,13 +226,65 @@ describe("ExpertSystemService", function () {
             };
 
             FakeExpertSystem.prototype.getFact = function(factName){
-                return {name: factName, value: true};
+                return {name: factName, getValue: function() {return true}};
             };
 
             injectDependencies(function (service) {
                 service.setFactValid("string", true);
-                expect(service.expertSystem.getFact("string").value).toBe(true);
+                expect(service.expertSystem.getFact("string").getValue()).toBe(true);
             }, null, FakeExpertSystem);
+        });
+
+        it("should set one from group true, the rest is false", function () {
+            var fact1 = {
+                name: "a",
+                group: "group"
+            };
+            var fact2 = {
+                name: "b",
+                group: "group"
+            };
+            var fact3 = {
+                name: "c",
+                group: "group2"
+            };
+
+            var FakeExpertSystem = function(){
+                this.facts = {"c": {
+                    getValue: function() {
+                        return undefined;
+                    }
+                }};
+            };
+            FakeExpertSystem.prototype.getFact = function(name){
+                var self = this;
+                return {
+                    getValue : function(){
+                        return self.facts[name].value;
+                    }
+                }
+            };
+            FakeExpertSystem.prototype.setFactValid = function(fact, value){
+                this.facts[fact] = {value: value};
+            };
+
+            var FakeRepository = function(){};
+            FakeRepository.prototype.getFactsFromGroup = function(){
+                return [fact1, fact2];
+            };
+            FakeRepository.prototype.getConclusions = function(){
+                return [];
+            };
+            FakeRepository.prototype.getFacts = function(){
+                return [];
+            };
+
+            injectDependencies(function (service) {
+                service.setFactValid(fact2, true);
+                expect(service.expertSystem.getFact("b").getValue()).toBe(true);
+                expect(service.expertSystem.getFact("a").getValue()).toBe(false);
+                expect(service.expertSystem.getFact("c").getValue()).toBe(undefined);
+            }, FakeRepository, FakeExpertSystem);
         });
     });
 });

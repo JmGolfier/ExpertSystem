@@ -17,12 +17,60 @@ angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageS
             localStorageService.set("conclusions", existingConclusions);
         };
 
+        KnowledgeRepository.prototype.getConclusion = function(name) {
+            var existingConclusions = this.getConclusions();
+            for(var i=0; i<existingConclusions.length; i++) {
+                if(existingConclusions[i].name == name)
+                    return existingConclusions[i];
+            }
+        };
+
+        KnowledgeRepository.prototype.deleteConclusion = function(name) {
+            var existingConclusions = this.getConclusions();
+            for(var i = 0; i<existingConclusions.length;i++) {
+                if(existingConclusions[i].name == name){
+                    existingConclusions.splice(i, 1);
+                    localStorageService.set("conclusions", existingConclusions);
+                    break;
+                }
+            }
+        };
+
+        KnowledgeRepository.prototype.deleteFact = function(name) {
+            var existingFacts = this.getFacts();
+            for(var i = 0; i<existingFacts.length;i++) {
+                if(existingFacts[i].name == name){
+                    existingFacts.splice(i, 1);
+                    localStorageService.set("facts", existingFacts);
+                    break;
+                }
+            }
+        };
+
         KnowledgeRepository.prototype.getFacts = function() {
             var existingFacts = localStorageService.get("facts");
             if(!existingFacts) {
                 existingFacts = [];
             }
             return existingFacts;
+        };
+
+        KnowledgeRepository.prototype.getFact = function(name){
+            var existingFacts = this.getFacts();
+            for (var i = 0; i<existingFacts.length;i++){
+                if(existingFacts[i].name == name)
+                    return existingFacts[i];
+            }
+        };
+
+        KnowledgeRepository.prototype.getFactsFromGroup = function(groupName) {
+            var existingFacts = this.getFacts();
+            var factFromGroup = [];
+            for(var i=0; i<existingFacts.length; i++) {
+                if(existingFacts[i].group == groupName)
+                    factFromGroup.push(existingFacts[i]);
+            }
+            return factFromGroup;
         };
 
         KnowledgeRepository.prototype.addFact = function(fact) {
@@ -33,6 +81,19 @@ angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageS
 
         KnowledgeRepository.prototype.clear = function() {
             localStorageService.clearAll();
+        };
+
+        KnowledgeRepository.prototype.importDatabase = function (dataBaseString) {
+            var dataBaseJSON = JSON.parse(dataBaseString);
+            localStorageService.set("facts", dataBaseJSON.facts);
+            localStorageService.set("conclusions", dataBaseJSON.conclusions);
+        };
+
+        KnowledgeRepository.prototype.exportDatabase = function () {
+            var dataBase = {};
+            dataBase.facts = this.getFacts();
+            dataBase.conclusions = this.getConclusions();
+            return dataBase;
         };
 
         return KnowledgeRepository;

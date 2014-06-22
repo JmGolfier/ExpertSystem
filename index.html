@@ -24,6 +24,7 @@
             <ul class="nav navbar-nav">
                 <li ng-class="{active:isActive('/battle')}"><a href="#/battle">Battle</a></li>
                 <li ng-class="{active:isActive('/knowledge')}"><a href="#/knowledge">Knowledge</a></li>
+                <li ng-class="{active:isActive('/database')}"><a href="#/database">Database</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -47,6 +48,7 @@
 <script src="js/controllers/IndexController.js"></script>
 <script src="js/controllers/FillKnowledgeController.js"></script>
 <script src="js/controllers/BattleController.js"></script>
+<script src="js/controllers/DatabaseController.js"></script>
 
 <!--Services-->
 <script src="js/services/KnowledgeRepository.js"></script>
@@ -55,5 +57,6 @@
 
 <!--Libs-->
 <script src="lib/expert_system/ExpertSystem.js"></script>
+<script src="lib/expert_system/Fact.js"></script>
 </body>
 </html>

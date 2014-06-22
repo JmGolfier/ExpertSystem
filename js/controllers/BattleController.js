@@ -6,7 +6,16 @@ angular.module(APP_NAME_CONTROLLERS).controller('BattleController', [ '$scope', 
         $scope.currentQuestion = expertSystemService.nextQuestion();
 
         $scope.setUserResponse = function(value) {
-            expertSystemService.setFactValid($scope.currentQuestion.name, value);
+            expertSystemService.setFactValid($scope.currentQuestion, value);
+            nextStep();
+        };
+
+        $scope.setUserResponseOption = function() {
+            expertSystemService.setFactValid($scope.selectedOptions, true);
+            nextStep();
+        };
+
+        function nextStep() {
             var conclusion = expertSystemService.analyze();
             if(conclusion){
                 $scope.conclusion = conclusion;
@@ -14,8 +23,8 @@ angular.module(APP_NAME_CONTROLLERS).controller('BattleController', [ '$scope', 
             }
             else{
                 $scope.currentQuestion = expertSystemService.nextQuestion();
+                console.log($scope.currentQuestion);
                 $scope.nbQuestions++;
             }
-
-        };
+        }
     }]);
