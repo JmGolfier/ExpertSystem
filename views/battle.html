@@ -2,15 +2,16 @@
 
 <div ng-show="currentQuestion">
     <h2>Question {{nbQuestions}} :</h2>
-    {{currentQuestion.question}}
 
     <div ng-show="currentQuestion.length">
+        {{currentQuestion[0].question}}<br>
         <select ng-model="selectedOptions"
                 ng-options="question.name for question in currentQuestion"></select>
         <button ng-click="setUserResponseOption()">Valider</button>
     </div>
 
     <div ng-hide="currentQuestion.length">
+        {{currentQuestion.question}}
         <button ng-click="setUserResponse(true)">Oui</button>
         <button ng-click="setUserResponse(false)">Non</button>
     </div>
