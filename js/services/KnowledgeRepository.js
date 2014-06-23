@@ -1,6 +1,16 @@
 angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageService",
     function(localStorageService) {
         var KnowledgeRepository = function() {
+            var existingConclusions = this.getConclusions();
+            if(existingConclusions.length == 0)
+                this.importDefaultData();
+        };
+
+        KnowledgeRepository.prototype.importDefaultData = function() {
+            var request = new XMLHttpRequest();
+            request.open('GET', 'data/default.json', false);  // `false` makes the request synchronous
+            request.send(null);
+            this.importDatabase(request.responseText);
         };
 
         KnowledgeRepository.prototype.getConclusions = function() {
