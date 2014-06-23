@@ -27,6 +27,7 @@ angular.module(APP_NAME, [
         $routeProvider.when('/battle', {templateUrl: 'views/battle.html', controller: 'BattleController'});
         $routeProvider.when('/knowledge', {templateUrl: 'views/fillKnowledge.html', controller: 'FillKnowledgeController'});
         $routeProvider.when('/database', {templateUrl: 'views/database.html', controller: 'DatabaseController'});
+        $routeProvider.when('/tree', {templateUrl: 'views/tree.html', controller: 'TreeController'});
         $routeProvider.otherwise({redirectTo: '/battle'});
     }]).
 
