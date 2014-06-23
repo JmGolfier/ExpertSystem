@@ -1,5 +1,17 @@
 <script>
-    function initTree(){
+
+    var json = {
+        id: "1",
+        name: "node1",
+        data: {},
+        children: [{}]
+    };
+    
+    function init(){
+
+        canvasElement = document.getElementById("canvas");
+        canvasContext = this.canvasElement.getContext("2d");
+
         //Create a new ST instance
         var st = new $jit.ST({
             //id of viz container element
@@ -105,7 +117,7 @@
             }
         });
         //load json data
-        st.loadJSON($scope.createJSON());
+        st.loadJSON(json);
 //compute node positions and layout
         st.compute();
 //optional: make a translation of the tree
@@ -114,13 +126,8 @@
         st.onClick(st.root);
     }
 
-    function init() {
-        canvasElement = document.getElementById("canvas");
-        canvasContext = this.canvasElement.getContext("2d");
-        }
 </script>
-
-<div onload="initTree()">
+<div>
     <div onload="init()">
         <canvas id="canvas" width="600" height="600" style="background-color:#eee; display:inline-block"></canvas>
     </div>
