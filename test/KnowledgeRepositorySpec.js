@@ -55,6 +55,40 @@ describe("KnowledgeRepository", function () {
             expect(firstConclusion.name).toBe(conclusion.name);
             expect(firstConclusion.facts.length).toBe(conclusion.facts.length);
         });
+
+        it("should get conclusions by priority", function () {
+            var conclusion1 = {
+                name: "a",
+                priority: 2
+            };
+            var conclusion2 = {
+                name: "b",
+                priority: 1
+            };
+            repository.addConclusion(conclusion1);
+            repository.addConclusion(conclusion2);
+
+            var conclusions = repository.getConclusions();
+            expect(conclusions[0].priority).toBe(1);
+            expect(conclusions[1].priority).toBe(2);
+        });
+
+        it("should get conclusions not by priority", function () {
+            var conclusion1 = {
+                name: "a",
+                priority: 2
+            };
+            var conclusion2 = {
+                name: "b",
+                priority: 1
+            };
+            repository.addConclusion(conclusion1);
+            repository.addConclusion(conclusion2);
+
+            var conclusions = repository.getConclusions(true);
+            expect(conclusions[0].priority).toBe(2);
+            expect(conclusions[1].priority).toBe(1);
+        });
     });
 
     describe("delete conclusion", function () {

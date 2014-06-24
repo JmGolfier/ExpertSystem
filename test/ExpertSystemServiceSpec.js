@@ -291,9 +291,20 @@ describe("ExpertSystemService", function () {
 
 function injectDependencies(callback, KnowledgeRepository, ExpertSystem) {
     module(function ($provide) {
-        if(KnowledgeRepository) {
-            $provide.value("KnowledgeRepository", KnowledgeRepository);
+        if(!KnowledgeRepository) {
+            KnowledgeRepository = function() {
+
+            };
+            KnowledgeRepository.prototype.getFacts = function() {
+                return [];
+            };
+
+            KnowledgeRepository.prototype.getConclusions = function() {
+                return [];
+            };
         }
+        $provide.value("KnowledgeRepository", KnowledgeRepository);
+
         if(ExpertSystem) {
             $provide.value("ExpertSystem", ExpertSystem);
         }
