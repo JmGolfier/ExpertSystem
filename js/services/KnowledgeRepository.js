@@ -53,6 +53,17 @@ angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageS
             localStorageService.set("conclusions", existingConclusions);
         };
 
+        KnowledgeRepository.prototype.updateConclusion = function(conclusion) {
+            var existingConclusions = this.getConclusions(true);
+            for(var i=0; i<existingConclusions.length; i++) {
+                if(existingConclusions[i].name == conclusion.name) {
+                    existingConclusions[i] = conclusion;
+                    break;
+                }
+            }
+            localStorageService.set("conclusions", existingConclusions);
+        };
+
         KnowledgeRepository.prototype.getConclusion = function(name) {
             var existingConclusions = this.getConclusions(true);
             for(var i=0; i<existingConclusions.length; i++) {
