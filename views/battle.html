@@ -1,4 +1,4 @@
-<h1>ATTRAPPEZ LES TOUUUUUUUUUUUUUS</h1>
+<img src="./img/Logo-Pokemon.jpg" width=20%>
 
 <div ng-show="currentQuestion" align="center">
     <h2>Question {{nbQuestions}} :</h2>
@@ -19,6 +19,7 @@
 
 <div ng-show="conclusion" align="center">
     {{conclusion.label}}<br>
+    <img src="./img/{{conclusion.name}}.gif"><br>
     Conclusion trouvée en {{nbQuestions}} questions.
 </div>
 
