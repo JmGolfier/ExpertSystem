@@ -20,7 +20,7 @@ angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageS
             }
             if(!notByPriority) {
                 var prioritedConclusions = this.organizeByPriority(existingConclusions);
-                if(prioritedConclusions.length != 0)
+                if(prioritedConclusions.length == existingConclusions.length)
                     existingConclusions = prioritedConclusions;
             }
             return existingConclusions;
