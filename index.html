@@ -5,6 +5,8 @@
     <title>Expert Pokemon</title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/isteven-angular-multiselect/angular-multi-select.css"/>
+    <link type="text/css" href="css/Spacetree.css" rel="stylesheet" />
+    <link type="text/css" href="css/base.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 
@@ -24,6 +26,7 @@
             <ul class="nav navbar-nav">
                 <li ng-class="{active:isActive('/battle')}"><a href="#/battle">Battle</a></li>
                 <li ng-class="{active:isActive('/knowledge')}"><a href="#/knowledge">Knowledge</a></li>
+                <li ng-class="{active:isActive('/tree')}"><a href="#/tree">Decision's tree</a></li>
                 <li ng-class="{active:isActive('/database')}"><a href="#/database">Database</a></li>
             </ul>
         </div><!--/.nav-collapse -->
@@ -49,6 +52,7 @@
 <script src="js/controllers/FillKnowledgeController.js"></script>
 <script src="js/controllers/BattleController.js"></script>
 <script src="js/controllers/DatabaseController.js"></script>
+<script src="js/controllers/TreeController.js"></script>
 
 <!--Services-->
 <script src="js/services/KnowledgeRepository.js"></script>
@@ -58,5 +62,6 @@
 <!--Libs-->
 <script src="lib/expert_system/ExpertSystem.js"></script>
 <script src="lib/expert_system/Fact.js"></script>
+<script src="lib/jit-yc.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <h1>ATTRAPPEZ LES TOUUUUUUUUUUUUUS</h1>
 
-<div ng-show="currentQuestion">
+<div ng-show="currentQuestion" align="center">
     <h2>Question {{nbQuestions}} :</h2>
 
     <div ng-show="currentQuestion.length">
@@ -17,11 +17,12 @@
     </div>
 </div>
 
-<div ng-show="conclusion">
+<div ng-show="conclusion" align="center">
     {{conclusion.label}}<br>
     Conclusion trouvée en {{nbQuestions}} questions.
 </div>
 
-<div ng-show="!currentQuestion && !conclusion">
-    :(
+<div ng-show="!currentQuestion && !conclusion" align="center">
+    <h3>Pas de données dans la base de connaissance.</h3>
+    <img src="./img/noData.gif">
 </div>

@@ -87,39 +87,53 @@
             <button ng-click="addFact()" class="btn btn-primary">Add Fact</button>
         </form>
 
-        <br><br>
+        <h2>Import Json Database</h2>
+        <textarea ng-model="jsonDatabase" class="form-control"></textarea><br>
+        <button ng-click="importDatabase()" class="btn btn-default">Import</button>
         <button ng-click="clearConclusions()" class="btn btn-danger">Clear conclusions</button>
     </div>
 
     <div class="col-md-6">
-        <h2>Existing conclusions</h2>
-        <ul>
-            <li ng-repeat="conclusion in conclusions">
-                {{conclusion.name}}: <span ng-repeat="fact in conclusion.facts"> {{fact}}</span>
-                <button ng-click="editConclusion(conclusion)" class="btn btn-default btn-sm">
-                    Edit
-                </button>
-                <button ng-click="deleteConclusion(conclusion.name)" class="btn btn-danger btn-sm">
-                    Delete
-                </button>
-            </li>
-        </ul>
+        <table class="table table-hover">
+            <tr>
+                <h2>Existing conclusions</h2>
+            </tr>
+            <tr ng-repeat="conclusion in conclusions">
+                <td>
+                    <ul><li>{{conclusion.name}}: <span ng-repeat="fact in conclusion.facts"> {{fact}}</span></li></ul>
+                </td>
+                <td>
+                    <button ng-click="editConclusion(conclusion)" class="btn btn-default btn-sm">
+                        Edit
+                    </button>
+                    <button ng-click="deleteConclusion(conclusion.name)" class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </table>
 
-        <h2>Existing facts</h2>
-        <ul>
-            <li ng-repeat="fact in facts">
-                {{fact.name}}
-                <button ng-click="editFact(fact)" class="btn btn-default btn-sm">
-                    Edit
-                </button>
-                <button ng-click="deleteFact(fact.name)" class="btn btn-danger btn-sm">
-                    Delete
-                </button>
-            </li>
-        </ul>
-
-        <h2>Import Json Database</h2>
-        <textarea ng-model="jsonDatabase" class="form-control"></textarea>
-        <button ng-click="importDatabase()" class="btn btn-default">Import</button>
+        <table class="table table-hover">
+            <tr>
+                <h2>Existing facts</h2>
+            </tr>
+            <tr ng-repeat="fact in facts">
+                <td>
+                    <ul>
+                        <li>
+                            {{fact.name}}
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <button ng-click="editFact(fact)" class="btn btn-default btn-sm">
+                        Edit
+                    </button>
+                    <button ng-click="deleteFact(fact.name)" class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
