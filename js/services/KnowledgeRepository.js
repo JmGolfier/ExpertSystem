@@ -1,8 +1,8 @@
 angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageService",
     function(localStorageService) {
-        var KnowledgeRepository = function() {
-            var existingConclusions = this.getConclusions();
-            if(existingConclusions.length == 0)
+        var KnowledgeRepository = function(notImportDefault) {
+            var existingConclusions = this.getConclusions(true);
+            if(existingConclusions.length == 0 && !notImportDefault)
                 this.importDefaultData();
         };
 
@@ -13,22 +13,59 @@ angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageS
             this.importDatabase(request.responseText);
         };
 
-        KnowledgeRepository.prototype.getConclusions = function() {
+        KnowledgeRepository.prototype.getConclusions = function(notByPriority) {
             var existingConclusions = localStorageService.get("conclusions");
             if(!existingConclusions) {
                 existingConclusions = [];
             }
+            if(!notByPriority) {
+                var prioritedConclusions = this.organizeByPriority(existingConclusions);
+                if(prioritedConclusions.length == existingConclusions.length)
+                    existingConclusions = prioritedConclusions;
+            }
             return existingConclusions;
         };
 
+        KnowledgeRepository.prototype.organizeByPriority = function(conclusions) {
+            var ordered = [];
+            var currentPriority = 1;
+            while(currentPriority != conclusions.length + 1) {
+                var priorityConclusion = getPriority(conclusions, currentPriority);
+                if(!priorityConclusion)
+                    break;
+                ordered.push(priorityConclusion);
+                currentPriority++;
+            }
+            return ordered;
+        };
+
+        function getPriority(conclusions, priority) {
+            for(var i=0; i<conclusions.length; i++) {
+                if(conclusions[i].priority == priority) {
+                    return conclusions[i];
+                }
+            }
+        }
+
         KnowledgeRepository.prototype.addConclusion = function(conclusion) {
-            var existingConclusions = this.getConclusions();
+            var existingConclusions = this.getConclusions(true);
             existingConclusions.push(conclusion);
             localStorageService.set("conclusions", existingConclusions);
         };
 
+        KnowledgeRepository.prototype.updateConclusion = function(conclusion) {
+            var existingConclusions = this.getConclusions(true);
+            for(var i=0; i<existingConclusions.length; i++) {
+                if(existingConclusions[i].name == conclusion.name) {
+                    existingConclusions[i] = conclusion;
+                    break;
+                }
+            }
+            localStorageService.set("conclusions", existingConclusions);
+        };
+
         KnowledgeRepository.prototype.getConclusion = function(name) {
-            var existingConclusions = this.getConclusions();
+            var existingConclusions = this.getConclusions(true);
             for(var i=0; i<existingConclusions.length; i++) {
                 if(existingConclusions[i].name == name)
                     return existingConclusions[i];
@@ -36,7 +73,7 @@ angular.module(APP_NAME_SERVICES).factory('KnowledgeRepository', ["localStorageS
         };
 
         KnowledgeRepository.prototype.deleteConclusion = function(name) {
-            var existingConclusions = this.getConclusions();
+            var existingConclusions = this.getConclusions(true);
             for(var i = 0; i<existingConclusions.length;i++) {
                 if(existingConclusions[i].name == name){
                     existingConclusions.splice(i, 1);
