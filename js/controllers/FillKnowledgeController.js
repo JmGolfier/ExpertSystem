@@ -28,6 +28,7 @@ angular.module(APP_NAME_CONTROLLERS).controller('FillKnowledgeController', [ '$s
             var conclusion = {
                 name: $scope.newConclusionName,
                 label : $scope.newConclusionLabel,
+                priorite : $scope.newConclusionPriorite,
                 facts : factNames
             };
             knoledgeRepository.addConclusion(conclusion);
@@ -43,6 +44,7 @@ angular.module(APP_NAME_CONTROLLERS).controller('FillKnowledgeController', [ '$s
         $scope.editConclusion = function(conclusion) {
             $scope.newConclusionName = conclusion.name;
             $scope.newConclusionLabel = conclusion.label;
+            $scope.newConclusionPriorite = conclusion.priorite;
         };
 
         $scope.deleteConclusion = function(conclusion) {
