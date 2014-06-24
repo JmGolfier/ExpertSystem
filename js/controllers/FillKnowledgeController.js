@@ -21,6 +21,11 @@ angular.module(APP_NAME_CONTROLLERS).controller('FillKnowledgeController', [ '$s
         };
 
         $scope.addConclusion = function() {
+            knoledgeRepository.addConclusion(createConclusionFromScope());
+            $scope.conclusions = knoledgeRepository.getConclusions();
+        };
+
+        function createConclusionFromScope(){
             var factNames = [];
             for(var i=0; i<$scope.newConclusionFacts.length; i++) {
                 factNames.push($scope.newConclusionFacts[i].name);
@@ -31,9 +36,8 @@ angular.module(APP_NAME_CONTROLLERS).controller('FillKnowledgeController', [ '$s
                 priorite : $scope.newConclusionPriorite,
                 facts : factNames
             };
-            knoledgeRepository.addConclusion(conclusion);
-            $scope.conclusions = knoledgeRepository.getConclusions();
-        };
+            return conclusion;
+        }
 
         $scope.clearConclusions = function() {
             knoledgeRepository.clear();
@@ -45,6 +49,11 @@ angular.module(APP_NAME_CONTROLLERS).controller('FillKnowledgeController', [ '$s
             $scope.newConclusionName = conclusion.name;
             $scope.newConclusionLabel = conclusion.label;
             $scope.newConclusionPriorite = conclusion.priorite;
+        };
+
+        $scope.updateConclusion = function(){
+            knoledgeRepository.updateConclusion(createConclusionFromScope());
+            $scope.conclusions = knoledgeRepository.getConclusions();
         };
 
         $scope.deleteConclusion = function(conclusion) {
