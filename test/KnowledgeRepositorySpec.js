@@ -91,6 +91,22 @@ describe("KnowledgeRepository", function () {
         });
     });
 
+    describe("updateConclusion", function () {
+        it("should update a conclusion and set a priority", function () {
+            var oldConclusion = {
+                name: "a"
+            };
+            var newConclusion = {
+                name: "a",
+                priority: 1
+            };
+            repository.addConclusion(oldConclusion);
+            repository.updateConclusion(newConclusion);
+            var updatedConclusion = repository.getConclusion("a");
+            expect(updatedConclusion.priority).toBe(1);
+        });
+    });
+
     describe("delete conclusion", function () {
         it("should delete a conclusion", function () {
             var conclusion1 = {
