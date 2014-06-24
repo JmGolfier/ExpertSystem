@@ -1,5 +1,6 @@
-<img src="./img/Logo-Pokemon.jpg" width=20%>
-
+<div align="center">
+    <img src="./img/Logo-Pokemon.jpg" width=35%>
+</div>
 <div ng-show="currentQuestion" align="center">
     <h2>Question {{nbQuestions}} :</h2>
 
@@ -11,16 +12,16 @@
     </div>
 
     <div ng-hide="currentQuestion.length">
-        {{currentQuestion.question}}
+        <h5>{{currentQuestion.question}}</h5>
         <button ng-click="setUserResponse(true)">Oui</button>
         <button ng-click="setUserResponse(false)">Non</button>
     </div>
 </div>
 
 <div ng-show="conclusion" align="center">
-    {{conclusion.label}}<br>
+    <h5>{{conclusion.label}}</h5><br>
     <img src="./img/{{conclusion.name}}.gif"><br>
-    Conclusion trouvée en {{nbQuestions}} questions.
+    <h5>Conclusion trouvée en {{nbQuestions}} questions.</h5>
 </div>
 
 <div ng-show="!currentQuestion && !conclusion" align="center">
